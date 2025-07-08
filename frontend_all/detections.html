@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Detections</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* This style block remains for the theme toggle */
+        .card {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* Enhanced Dark Theme Colors */
+        [data-theme="dark"] {
+            --neutral-bg-light: #202036; /* Slightly lighter dark blue-grey for cards */
+            --neutral-bg-medium: #1A1A2E; /* Deep blue-black for main body background */
+            --neutral-bg-dark: #30304D;  /* Darker blue-grey for borders/dividers */
+            --neutral-text-dark: #E0E0E0; /* Light grey for main headings/important text */
+            --neutral-text-medium: #B0B0C0; /* Muted light grey for body text */
+            --neutral-text-light: #808090; /* Desaturated grey for secondary/placeholder text */
+            --border-color: #40405A; /* Darker, subtle border */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* More pronounced shadow in dark mode */
+            background-color: var(--neutral-bg-medium); /* Apply to body */
+        }
+
+        /* Dark mode specific styles for file input button */
+        [data-theme="dark"] .file-input::-webkit-file-upload-button,
+        [data-theme="dark"] .file-input::file-selector-button {
+            background-color: var(--neutral-bg-dark); /* Use the dark neutral background */
+            color: var(--neutral-text-medium); /* Use a light text color for readability in dark mode */
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+
+    <header class="app-header">
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">Monitoring</a>
+            <a href="detections.html" class="nav-link active">Detections</a>
+            <a href="chatbot.html" class="nav-link">AI Assistant</a>
+        </nav>
+    </header>
+
+    <div class="main-layout single-page">
+        <div class="latest-detections-card card full-width-card">
+            <h1 class="section-title">🔍 Latest Detections</h1>
+            <div class="predictions-table-container">
+                <table id="predictionTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Fruit</th>
+                            <th>Ripeness</th>
+                            <th>Disease</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="predictionTableBody">
+                        <tr><td colspan="5" class="no-data">No predictions yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

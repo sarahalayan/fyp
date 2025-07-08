@@ -1,0 +1,14 @@
+langchain
+langchain-google-genai
+Flask
+Pillow
+scikit-learn
+requests
+python-dotenv
+wikipedia
+torch==2.2.1
+torchvision==0.17.1
+opencv-python # For server-side camera access
+ultralytics
+langchain-community
+Flask-Cors

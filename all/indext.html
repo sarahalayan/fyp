@@ -1,0 +1,182 @@
+<!-- Updated index.html with modern enhancements -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Monitoring & AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+         /* --- Additional Enhancements --- */
+        .card {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* Enhanced Dark Theme Colors */
+        [data-theme="dark"] {
+            --neutral-bg-light: #202036; /* Slightly lighter dark blue-grey for cards */
+            --neutral-bg-medium: #1A1A2E; /* Deep blue-black for main body background */
+            --neutral-bg-dark: #30304D;  /* Darker blue-grey for borders/dividers */
+            --neutral-text-dark: #E0E0E0; /* Light grey for main headings/important text */
+            --neutral-text-medium: #B0B0C0; /* Muted light grey for body text */
+            --neutral-text-light: #808090; /* Desaturated grey for secondary/placeholder text */
+            --border-color: #40405A; /* Darker, subtle border */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* More pronounced shadow in dark mode */
+            background-color: var(--neutral-bg-medium); /* Apply to body */
+        }
+
+        /* Dark mode specific styles for file input button */
+        [data-theme="dark"] .file-input::-webkit-file-upload-button,
+        [data-theme="dark"] .file-input::file-selector-button {
+            background-color: var(--neutral-bg-dark); /* Use the dark neutral background */
+            color: var(--neutral-text-medium); /* Use a light text color for readability in dark mode */
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            display: inline-block;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 0.6s infinite alternate;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            to { transform: translateY(-5px); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+
+    <div class="main-layout">
+        <!-- Monitoring Section -->
+        <div class="monitoring-section card">
+            <div class="section-content">
+                <h1 class="section-title">🌳 Plant Monitoring Dashboard</h1>
+                
+                <form id="uploadForm" class="form-group">
+                    <div class="form-field">
+                        <label for="videoFile" class="input-label">Select a video file (MP4, AVI, MOV, MKV):</label>
+                        <input type="file" id="videoFile" name="video" accept="video/mp4,video/x-msvideo,video/quicktime,video/x-matroska" class="file-input">
+                    </div>
+                    <div class="form-field">
+                        <label for="detectionInterval" class="input-label">Detection Interval (seconds):</label>
+                        <select id="detectionInterval" name="detectionInterval" class="select-input">
+                            <option value="5" selected>5 seconds</option>
+                            <option value="10">10 seconds</option>
+                            <option value="15">15 seconds</option>
+                            <option value="30">30 seconds</option>
+                        </select>
+                    </div>
+                    <div class="form-field checkbox-field">
+                        <input type="checkbox" id="enableTreeDetection" name="enableTreeDetection" checked class="checkbox-input">
+                        <label for="enableTreeDetection" class="checkbox-label">Enable Tree Detection</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="uploadButton" class="btn btn-primary">Upload Video & Start Monitoring</button>
+                    </div>
+                </form>
+
+                <div id="responseMessage" class="message-box">
+                    Waiting for upload...
+                </div>
+
+                <div id="videoPlayerContainer" class="video-player-card" style="display: none;">
+                    <h2 class="video-player-title">Live Video Feed</h2>
+                    <video id="videoPlayer" controls autoplay muted loop class="video-display"></video>
+                </div>
+            </div>
+
+            <div class="sidebar card">
+                <h2 class="sidebar-title">📊 Monitoring Status</h2>
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar">0%</div>
+                </div>
+                <p id="currentVideoStatus" class="status-text">No video loaded.</p>
+                <p id="processedFramesStatus" class="status-text">Processed: 0 frames</p>
+                <p id="totalFramesStatus" class="status-text">Total: 0 frames</p>
+
+                <h2 class="sidebar-title">🔍 Latest Detections</h2>
+                <div class="predictions-table-container">
+                    <table id="predictionTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Fruit</th>
+                                <th>Ripeness</th>
+                                <th>Disease</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="predictionTableBody">
+                            <tr><td colspan="5" class="no-data">No predictions yet.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chatbot Section -->
+        <div class="chatbot-section card">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h1 class="section-title">💬 Plant AI Assistant</h1>
+                </div>
+                <div class="chat-window" id="chat-window">
+                    <!-- Chat messages will be appended here -->
+                </div>
+                <div class="chat-input-area">
+                    <div class="attachment-container">
+                        <button class="attachment-button" id="attachment-button" type="button" aria-label="Attach file">+</button>
+                        <div class="attachment-options" id="attachment-options" role="menu">
+                            <button class="option-button" id="upload-image-button" type="button" role="menuitem">
+                                <span class="icon">🖼️</span> Upload Image
+                            </button>
+                            <!-- Add other attachment options here if needed -->
+                        </div>
+                    </div>
+                    <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                    <input type="text" id="user-input" placeholder="Type your message or ask about your plant..." class="text-input">
+                    <button id="send-button" type="button" class="btn btn-icon">➡️</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                this.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                this.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

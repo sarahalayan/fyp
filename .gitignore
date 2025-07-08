@@ -1,0 +1,15 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Any other specific large files or temporary files you want to ignore
+# e.g., output/
+# *.log

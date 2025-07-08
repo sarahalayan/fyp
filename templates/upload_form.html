@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video for Monitoring</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to the new CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Video for Tree Monitoring</h1>
+        
+        <form id="uploadForm">
+            <div>
+                <label for="videoFile">Select a video file (MP4, AVI, MOV, MKV):</label>
+                <input type="file" id="videoFile" name="video" accept="video/mp4,video/x-msvideo,video/quicktime,video/x-matroska">
+            </div>
+            <div>
+                <label for="detectionInterval">Detection Interval (seconds):</label>
+                <select id="detectionInterval" name="detectionInterval">
+                    <option value="5" selected>5 seconds</option>
+                    <option value="10">10 seconds</option>
+                    <option value="15">15 seconds</option>
+                    <option value="30">30 seconds</option>
+                </select>
+            </div>
+            <!-- Checkbox for Tree Detection -->
+            <div>
+                <input type="checkbox" id="enableTreeDetection" name="enableTreeDetection" checked>
+                <label for="enableTreeDetection" style="display: inline-block; margin-left: 5px;">Enable Tree Detection</label>
+            </div>
+            <div>
+                <input type="submit" id="uploadButton" value="Upload Video">
+            </div>
+        </form>
+
+        <div id="responseMessage">
+            Waiting for upload...
+        </div>
+
+        <div id="videoPlayerContainer" style="display: none;">
+            <h2>Uploaded Video</h2>
+            <video id="videoPlayer" controls autoplay muted loop></video>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2>Monitoring Status</h2>
+        <div id="processingProgress">
+            <div id="progressBar">0%</div>
+        </div>
+        <p id="currentVideoStatus">No video loaded.</p>
+        <p id="processedFramesStatus">Processed: 0 frames</p>
+        <p id="totalFramesStatus">Total: 0 frames</p>
+
+        <h2>Predictions</h2>
+        <!-- Reverted: Removed predictions-controls div -->
+        <div class="predictions-table-container">
+            <table id="predictionTable">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Fruit</th>
+                        <th>Ripeness</th>
+                        <th>Disease</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="predictionTableBody">
+                    <tr><td colspan="5">No predictions yet.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Link to the new JavaScript -->
+</body>
+</html>

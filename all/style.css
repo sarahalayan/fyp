@@ -1,0 +1,743 @@
+/* Google Fonts - Inter is already included in HTML */
+
+/* --- Variables for consistent styling --- */
+:root {
+    --primary-green: #22c55e;
+    --primary-green-dark: #16a34a;
+    --accent-blue: #3b82f6;
+    --accent-blue-dark: #2563eb;
+    --neutral-bg-light: #f8fafc;
+    --neutral-bg-medium: #f0f4f8;
+    --neutral-bg-dark: #e2e8f0;
+    --neutral-text-dark: #1e293b;
+    --neutral-text-medium: #334155;
+    --neutral-text-light: #475569;
+    --border-color: #cbd5e1;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --border-radius-large: 16px;
+    --border-radius-medium: 10px;
+    --border-radius-small: 8px;
+    --transition-speed: 0.3s;
+
+    /* Define chatbot fixed width for calculations */
+    --chatbot-fixed-width: 600px;
+}
+
+/* --- General Body & Layout --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--neutral-bg-medium);
+    color: var(--neutral-text-medium);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligns content to the top */
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px; /* Increased padding around the app */
+    box-sizing: border-box;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll due to fixed elements */
+}
+
+/* --- Main Layout for Two Sections --- */
+.main-layout {
+    display: flex; /* Use flexbox to arrange sections side-by-side */
+    gap: 40px; /* Increased gap for better visual separation */
+    width: 100%;
+    max-width: 1500px; /* Slightly adjusted max width */
+    align-items: flex-start; /* Align to top as chatbot is fixed */
+    /* Add margin to make space for the fixed chatbot on the right */
+    margin-right: calc(var(--chatbot-fixed-width) + 40px + 40px); /* Chatbot width + right body padding + gap */
+    margin-left: auto; /* Keep it centered on the remaining space */
+    position: relative; /* Needed for z-index context, though not strictly required for fixed */
+}
+
+/* --- Card Styling (Common for main sections and sidebar) --- */
+.card {
+    background-color: #ffffff;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--card-shadow);
+    padding: 35px; /* More generous internal padding */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Monitoring Section Specifics --- */
+.monitoring-section {
+    flex-grow: 1; /* Allow monitoring section to take remaining space */
+    gap: 30px; /* Space between the main content and sidebar */
+}
+
+.monitoring-section .section-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Space between internal blocks like form, message, video */
+}
+
+.sidebar {
+    flex-grow: 1;
+    padding: 25px;
+    border-radius: var(--border-radius-medium);
+    background-color: var(--neutral-bg-light);
+    border: 1px solid var(--neutral-bg-dark); /* Subtle border */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- Headings --- */
+.section-title { /* New class for main section titles */
+    text-align: center;
+    color: var(--neutral-text-dark);
+    margin-bottom: 30px; /* More space below titles */
+    font-weight: 700;
+    font-size: 2.2em; /* Larger, more impactful main titles */
+    letter-spacing: -0.03em; /* Tighter letter spacing for impact */
+}
+
+.sidebar-title {
+    font-size: 1.5em; /* Slightly larger sidebar titles */
+    margin-bottom: 15px;
+    color: var(--neutral-text-dark);
+    border-bottom: 1px solid var(--neutral-bg-dark);
+    padding-bottom: 10px;
+}
+
+/* --- Form Styling --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--neutral-text-light);
+    font-size: 0.95em;
+}
+
+.file-input,
+.text-input,
+.select-input {
+    width: 100%;
+    padding: 14px 18px; /* Increased padding for inputs */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: all var(--transition-speed) ease;
+    background-color: #ffffff;
+}
+
+.file-input:focus,
+.text-input:focus,
+.select-input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Soft blue focus glow */
+    outline: none;
+}
+
+/* Custom file input button styling */
+.file-input::-webkit-file-upload-button,
+.file-input::file-selector-button {
+    padding: 10px 20px;
+    background-color: var(--neutral-bg-dark);
+    border: none; /* Removed border */
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color var(--transition-speed) ease;
+    margin-right: 15px; /* Space between button and filename */
+}
+
+.file-input::-webkit-file-upload-button:hover,
+.file-input::file-selector-button:hover {
+    background-color: #cdd5ef;
+}
+
+/* --- Checkbox Styling --- */
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.checkbox-input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px; /* Slightly larger checkbox */
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0; /* Prevent shrinking on small screens */
+}
+
+.checkbox-input:checked {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.checkbox-input:checked::before {
+    content: '✓';
+    font-size: 15px; /* Larger checkmark */
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-label {
+    color: var(--neutral-text-light);
+    font-weight: 500;
+    cursor: pointer;
+    flex-grow: 1; /* Allows label to take available space */
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 14px 30px; /* More generous button padding */
+    border: none;
+    border-radius: var(--border-radius-medium);
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+    box-shadow: var(--button-shadow);
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    color: white;
+    /* Optional: subtle gradient for modern feel */
+    background-image: linear-gradient(to bottom right, var(--primary-green), #2ed87c);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-green-dark);
+    background-image: none; /* Remove gradient on hover for darker effect */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15); /* More pronounced hover shadow */
+}
+
+.btn-icon {
+    background-color: var(--accent-blue);
+    color: white;
+    width: 50px; /* Slightly larger icon buttons */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: 1.6em; /* Larger icon */
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-icon:hover {
+    background-color: var(--accent-blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Message Box --- */
+.message-box {
+    margin-top: 25px;
+    padding: 20px; /* More padding */
+    border-radius: var(--border-radius-medium);
+    background-color: var(--neutral-bg-light);
+    border: 1px solid var(--neutral-bg-dark);
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.95em;
+    color: var(--neutral-text-light);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05); /* Inner shadow for subtle depth */
+}
+
+.message-box.uploading {
+    background-color: #fffbeb;
+    border-color: #fbd38d;
+    color: #b45309;
+}
+
+.message-box.success {
+    background-color: #ecfdf5;
+    border-color: #34d399;
+    color: #047857;
+}
+
+.message-box.error {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+    color: #b91c1c;
+}
+
+/* --- Video Player --- */
+.video-player-card {
+    /* Removed flex-grow: 1 to give it a fixed height */
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    border: 1px solid var(--neutral-bg-dark);
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+    background-color: #1e293b; /* Dark background for video */
+    box-shadow: var(--card-shadow);
+    height: 400px; /* Fixed height for the video player card */
+    min-height: 250px; /* Keep a minimum height to prevent it from collapsing too much */
+}
+
+.video-player-title {
+    color: #e0e7ff;
+    background-color: var(--neutral-text-medium);
+    padding: 18px 25px; /* More padding */
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    border-bottom: 1px solid #475569;
+    text-align: left;
+}
+
+.video-display {
+    width: 100%;
+    height: 100%; /* Make video fill its container's height */
+    object-fit: contain; /* Ensure video scales properly within bounds */
+    display: block; /* Remove any extra space below the video */
+}
+
+/* --- Progress Bar --- */
+.progress-bar-container {
+    background-color: var(--neutral-bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    height: 30px; /* Slightly taller progress bar */
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.progress-bar {
+    background-color: var(--primary-green);
+    height: 100%;
+    width: 0%;
+    border-radius: var(--border-radius-small);
+    line-height: 30px; /* Center text vertically */
+    text-align: center;
+    color: white;
+    font-size: 1em; /* Slightly larger text */
+    font-weight: 500;
+    transition: width 0.7s ease-out, background-color 0.4s ease; /* Smoother transitions */
+}
+
+.status-text {
+    font-size: 0.95em;
+    color: var(--neutral-text-light);
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+/* --- Predictions Table --- */
+.predictions-table-container {
+    max-height: 500px; /* Increased height for more predictions */
+    overflow-y: auto;
+    border: 1px solid var(--neutral-bg-dark);
+    border-radius: var(--border-radius-medium);
+    margin-top: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em; /* Slightly larger font */
+    color: var(--neutral-text-light);
+}
+
+.data-table thead {
+    background-color: var(--neutral-bg-light);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.data-table th {
+    padding: 15px 12px; /* More padding */
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+    font-weight: 600;
+    color: var(--neutral-text-dark);
+    text-transform: uppercase;
+    font-size: 0.85em; /* Slightly larger header font */
+    letter-spacing: 0.06em;
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid var(--neutral-bg-dark);
+    transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #fdfefe; /* Very light subtle stripe */
+}
+
+.data-table tbody tr:hover {
+    background-color: #f6f8fc; /* Light blue-grey hover */
+}
+
+.data-table td {
+    padding: 13px 12px; /* More padding */
+    vertical-align: top;
+}
+
+.no-data {
+    text-align: center;
+    font-style: italic;
+    color: #718096;
+    padding: 25px; /* More padding for no data message */
+    font-size: 0.95em;
+}
+
+/* --- Chatbot Specific Styles --- */
+.chatbot-section {
+    position: fixed; /* Make chatbot fixed */
+    top: 40px; /* Align with body's top padding */
+    right: 40px; /* Align with body's right padding */
+    width: var(--chatbot-fixed-width); /* Use defined fixed width */
+    height: calc(100vh - 80px); /* Calculate height to fit within body padding */
+    z-index: 1000; /* Ensure it stays on top */
+    /* Remove flex properties as it's now fixed */
+    /* flex: 1; min-width: 400px; are no longer needed here */
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* max-height on chat-container is now controlled by fixed height of chatbot-section */
+}
+
+/* Adjusted chat header for a less bulky look */
+.chat-header {
+    background-color: var(--accent-blue);
+    color: white;
+    padding: 15px 20px; /* Reduced vertical padding */
+    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+    text-align: center;
+    font-size: 1.3em; /* Slightly smaller font size */
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 25px; /* More padding */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--neutral-bg-light);
+    border: 1px solid var(--neutral-bg-dark);
+    border-top: none;
+    border-bottom: none;
+}
+
+.message {
+    max-width: 90%; /* Slightly wider messages */
+    padding: 14px 20px; /* More padding */
+    border-radius: 22px; /* Even more rounded bubbles */
+    margin-bottom: 15px; /* More space between messages */
+    word-wrap: break-word;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); /* Softer, slightly larger shadow */
+    line-height: 1.55;
+    font-size: 0.98em; /* Slightly larger text in messages */
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: var(--primary-green);
+    color: white;
+    border-bottom-right-radius: 10px; /* Pointed corner refined */
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #e0e7ff; /* Light blue for bot */
+    color: var(--neutral-text-medium);
+    border-bottom-left-radius: 10px; /* Pointed corner refined */
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 18px 25px; /* More padding */
+    border-top: 1px solid var(--neutral-bg-dark);
+    border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
+    background-color: #ffffff;
+    align-items: center;
+    gap: 15px; /* Increased space between input and buttons */
+}
+
+/* Enhanced send button aesthetics */
+#send-button {
+    margin-top: 0;
+    background-color: var(--accent-blue); /* Consistent blue accent */
+    color: white;
+    width: 48px; /* Fixed width */
+    height: 48px; /* Fixed height for a perfect circle/square */
+    border-radius: 50%; /* Circular button */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6em; /* Slightly larger arrow icon */
+    padding: 0; /* Remove default padding for precise sizing */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#send-button:hover {
+    background-color: var(--accent-blue-dark); /* Darker blue on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2); /* More pronounced hover shadow */
+}
+
+/* --- Attachment Dropdown --- */
+.attachment-container {
+    position: relative;
+    display: flex; /* Ensure button aligns well */
+    align-items: center;
+}
+
+.attachment-button {
+    background-color: #64748b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px; /* Larger attachment button */
+    height: 50px;
+    font-size: 1.7em; /* Larger icon */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.attachment-button:hover {
+    background-color: #475569;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+.attachment-options {
+    position: absolute;
+    bottom: calc(100% + 12px); /* Position above the button with more gap */
+    left: 0;
+    background-color: white;
+    border: 1px solid var(--neutral-bg-dark);
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18); /* More pronounced, softer shadow */
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 10;
+    min-width: 170px; /* Slightly wider options */
+}
+
+.attachment-options.show {
+    display: flex;
+    animation: fadeInScale 0.25s ease-out forwards; /* Slightly slower animation */
+    transform-origin: bottom left;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.option-button {
+    background: none;
+    border: none;
+    padding: 12px 18px; /* More padding for options */
+    text-align: left;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    color: var(--neutral-text-light);
+    transition: all 0.2s ease;
+    border-radius: var(--border-radius-small);
+}
+
+.option-button:hover {
+    background-color: #f1f5f9;
+    transform: translateX(4px); /* Slightly more pronounced slide effect */
+}
+
+.option-button .icon {
+    margin-right: 12px; /* More space for icon */
+    font-size: 1.4em;
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 1200px) {
+    /* Revert to stacked layout on smaller screens */
+    .main-layout {
+        flex-direction: column;
+        gap: 30px;
+        padding: 25px;
+        margin-right: auto; /* Reset margin from fixed chatbot */
+        max-width: 100%; /* Allow it to take full width */
+    }
+
+    .monitoring-section {
+        flex: none; /* Remove flex sizing for fixed chatbot compensation */
+        width: 100%; /* Take full width when stacked */
+    }
+
+    .chatbot-section {
+        position: static; /* Revert to normal document flow */
+        width: 100%; /* Take full width when static */
+        height: auto; /* Allow height to adjust content */
+        top: auto;
+        right: auto;
+        z-index: auto;
+        /* Re-add flex property for stacking */
+        display: flex; /* Ensure it retains flex properties for its internal layout */
+        flex-direction: column;
+        min-width: 350px; /* Restore original min-width for stacked view */
+    }
+
+    .card {
+        padding: 30px;
+    }
+    .section-title {
+        font-size: 2em;
+    }
+    .sidebar-title {
+        font-size: 1.4em;
+    }
+    .chat-container {
+        min-height: 450px; /* Adjusted min-height for stacked layout */
+        max-height: 700px; /* Set a reasonable max height for tablet/desktop stacked view */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    .main-layout {
+        gap: 25px;
+    }
+    .card {
+        padding: 25px;
+        border-radius: 14px;
+    }
+    .section-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .sidebar-title {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+    .btn, .file-input, .text-input, .select-input {
+        font-size: 0.9em;
+        padding: 10px 15px;
+        border-radius: 8px;
+    }
+    .btn-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.4em;
+    }
+    .chat-input-area {
+        flex-wrap: wrap; /* Allows input elements to wrap */
+        padding: 15px;
+        gap: 10px;
+    }
+    #user-input { /* Remove .text-input specific overrides */
+        flex-basis: 100%;
+        order: 1;
+        margin-right: 0;
+        border-radius: 25px;
+        padding: 12px 18px;
+    }
+    #send-button {
+        order: 3;
+        flex-grow: 1;
+        border-radius: 25px;
+        padding: 12px 18px;
+    }
+    .attachment-container {
+        order: 2;
+        margin-right: 0;
+        width: auto;
+        justify-content: center; /* Center button when wrapped */
+        flex-grow: 1; /* Allow to take space for centering */
+    }
+    .attachment-button {
+        width: 40px; /* Smaller attachment button */
+        height: 40px;
+        font-size: 1.3em;
+    }
+    .attachment-options {
+        bottom: calc(100% + 8px); /* Adjust position for smaller buttons */
+        min-width: 140px;
+    }
+    .message {
+        max-width: 95%; /* Allow messages to be wider on smaller screens */
+        font-size: 0.9em;
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    .main-layout {
+        gap: 20px;
+    }
+    .card {
+        padding: 15px;
+        border-radius: 12px;
+    }
+    .section-title {
+        font-size: 1.6em;
+    }
+    .sidebar-title {
+        font-size: 1.1em;
+    }
+    .btn, .file-input, .text-input, .select-input {
+        font-size: 0.85em;
+        padding: 8px 12px;
+    }
+    .btn-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1em;
+    }
+    .chat-input-area {
+        padding: 12px;
+        gap: 6px;
+    }
+    .option-button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+    .option-button .icon {
+        font-size: 1.1em;
+    }
+}
